@@ -10,7 +10,21 @@ public class House extends Building {
   private boolean hasElevator;
 
 
-/**
+/**constructor for house class
+ * 
+ * @param name
+ * @param address
+ * @param nFloors
+ * 
+ */
+  public House(String name, String address, int nFloors) {
+    super(name, address, nFloors);
+    this.residents = new ArrayList<String>();
+    this.hasDiningRoom = hasDiningRoom;
+    this.hasElevator = hasElevator();
+
+  }
+/**overload
  * 
  * @param name
  * @param address
@@ -18,6 +32,21 @@ public class House extends Building {
  * @param hasDiningRoom
  */
   public House(String name, String address, int nFloors, boolean hasDiningRoom) {
+    super(name, address, nFloors);
+    this.residents = new ArrayList<String>();
+    this.hasDiningRoom = hasDiningRoom;
+    this.hasElevator = hasElevator();
+
+  }
+/**overload 
+ * 
+ * @param name
+ * @param address
+ * @param nFloors
+ * @param hasDiningRoom
+ * @param hasElevator
+ */
+  public House(String name, String address, int nFloors, boolean hasDiningRoom, boolean hasElevator) {
     super(name, address, nFloors);
     this.residents = new ArrayList<String>();
     this.hasDiningRoom = hasDiningRoom;
@@ -83,23 +112,39 @@ public class House extends Building {
 
 
 
-  public void showOptions(){
-    super.showOptions();
-    System.out.println("+ moveIn()\n + moveOut() \n + hasDiningRoom()\n + nResidents() \n+ goToFloor(activeFloor)\n");
+  @Override
+  public void showOptions() {
+    System.out.println("Available options at " + this.name + ":\n + enter() \n + exit() \n + goUp() \n + goDown()\n + goToFloor(n) + moveIn()\n + moveOut()\n");
   }
 
   public boolean hasElevator(){
     return this.hasElevator;
   }
 
-
-  public void goToFloor(int floorNum){
-    if(this.hasElevator()){
-      super.goToFloor(floorNum);}
-      else{
-        throw new RuntimeException("Sorry, no elevator available, take the stairs");
+  public void goToFloor(int floorNum) {
+    if (this.activeFloor == -1) {
+        throw new RuntimeException("You are not inside this Building. Must call enter() before navigating between floors.");
+    }
+    if (hasElevator == false){
+      if (floorNum >= 1 || floorNum <= this.nFloors){
+        if (floorNum == this.activeFloor +1|| floorNum == this.activeFloor - 1){
+        } else {
+          throw new RuntimeException("Must enter adjacent floor number.");
+        }
+      } else {
+        throw new RuntimeException("Invalid floor number. Valid range for this Building is 1-" + this.nFloors +".");
       }
-}
+    } else {
+      if (floorNum >= 1 || floorNum <= this.nFloors){
+        System.out.println("You are now on floor #" + floorNum + " of " + this.name);
+        this.activeFloor = floorNum;
+      }else{
+        throw new RuntimeException("Invalid floor number. Valid range for this Building is 1-" + this.nFloors +".");
+      }
+      System.out.println("There is an elevator in the building");
+    }
+  
+  }
 
   public static void main(String[] args) {
     House gardiner = new House("Gardiner", "1 Paradise Rd", 4, false);

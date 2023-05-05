@@ -6,11 +6,13 @@ public class Cafe extends Building {
     private int nSugarPackets; // The number of sugar packets remaining in inventory
     private int nCreams; // The number of "splashes" of cream remaining in inventory
     private int nCups; // The number of cups remaining in inventory
+    private int nStraws; 
+    private int nLids;
 
-    /** cafe class:
-     * @param name
-     * @param address
-     * @param nFloors
+    /** cafe using the building class
+     * @param name name od building 
+     * @param address address of building
+     * @param nFloors number of floors in building
      */
     public Cafe(String name, String address, int nFloors) {
         super(name,address,nFloors);
@@ -18,8 +20,8 @@ public class Cafe extends Building {
         this.nSugarPackets=200;
         this.nCreams=300;
         this.nCups=400;
-        
-        //System.out.println("You have built a cafe: ☕");
+
+        System.out.println("You have built a cafe: ☕");
     }
     
     
@@ -29,12 +31,33 @@ public class Cafe extends Building {
      * @param nCreams
      */
     public void sellCoffee(int size, int nSugarPackets, int nCreams){
-        this.nCoffeeOunces = size;
-        this.nSugarPackets = nSugarPackets;
-        this.nCreams = nCreams;
-        this.nCups = 1;
+        this.nCoffeeOunces -= size;
+        this.nSugarPackets -= nSugarPackets;
+        this.nCreams -= nCreams;
+        this.nCups -= 1;
 
     }
+
+    public void sellCoffee(int size, int nSugarPackets, int nCreams, int nStraws){
+        this.nCoffeeOunces -= size;
+        this.nSugarPackets -= nSugarPackets;
+        this.nCreams -= nCreams;
+        this.nCups -= 1;
+        this.nStraws -= 1;
+
+    }
+
+    public void sellCoffee(int size, int nSugarPackets, int nCreams, int nStraws, int nLids){
+        this.nCoffeeOunces -= size;
+        this.nSugarPackets -= nSugarPackets;
+        this.nCreams -= nCreams;
+        this.nCups -= 1;
+        this.nStraws -= 1;
+        this.nLids -= 1;
+
+    }
+
+    
 
     /** accessor for restock:
      * @param nCoffeeOunces
@@ -49,12 +72,15 @@ public class Cafe extends Building {
         this.nCreams = nCreams;
         this.nCups = nCups;
     }
-    public void showOptions(){
-        super.showOptions();
-        System.out.println("Cafe.showOptions()");
-    
-    }
 
+    
+    @Override
+  public void showOptions() {
+    System.out.println("Available options at " + this.name + ":\n + enter() \n + exit() \n + goUp() \n + goDown()\n + goToFloor(n) + moveIn()\n + moveOut()\n");
+  }
+
+
+    
     public void goToFloor(int floorNum){
         if(floorNum>1){
             throw new RuntimeException("no upper level available");

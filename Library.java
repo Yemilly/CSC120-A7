@@ -12,12 +12,16 @@ public class Library extends Building{
    * @param nFloors
   */
 
-    public Library(String name, String address, int nFloors) {
+    public Library(String name, String address, int nFloors, ) {
+      super(name, address, nFloors);
+      this.collection= new Hashtable<String,Boolean>();
+    
+    }
+
+    public Library(String name, String address, int nFloors, boolean hasElevator) {
       super(name, address, nFloors);
       this.hasElevator = hasElevator();
       this.collection= new Hashtable<String,Boolean>();
-    
-      //System.out.println("You have built a library: 📖");
     }
 
 
@@ -28,6 +32,13 @@ public class Library extends Building{
    */
     public void addTitle(String title){
       this.collection.put(title, true);
+
+
+    }
+
+    public void addTitle(String book1, String book2){
+      this.collection.put(book1, true);
+      this.collection.put(book2, true);
 
 
     }
@@ -90,10 +101,11 @@ public class Library extends Building{
 
     }
 
-    public void showOptions(){
-      super.showOptions();
-      System.out.println("+ addTitle() \n + removeTitle() \n + checkOut() \n + returnBook() \n + containsTitle() \n + isAvailable() \n + printCollection() \n + goToFloor()");
+    @Override
+    public void showOptions() {
+      System.out.println("Available options at " + this.name + ":\n + enter() \n + exit() \n + goUp() \n + goDown()\n + goToFloor(n) + moveIn()\n + moveOut()\n");
     }
+  
 
     public boolean hasElevator(){
       return this.hasElevator;
